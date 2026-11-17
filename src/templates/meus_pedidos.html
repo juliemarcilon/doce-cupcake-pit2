@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container py-4">
-    <h2 class="mb-4 text-center" style="color: #d63384;">Meus Pedidos</h2>
-    {% if pedidos %}
-        <div class="table-responsive shadow-sm rounded bg-white p-3">
-            <table class="table table-hover align-middle">
-                <thead class="table-light">
+<h3 class="fw-bold mb-4">Meus Pedidos</h3>
+
+{% if pedidos %}
+    <div class="card border-0 shadow-sm p-3">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
                     <tr>
                         <th>Pedido #</th>
-                        <th>Data</th>
                         <th>Endereço de Entrega</th>
-                        <th>Pagamento</th>
+                        <th>CEP</th>
+                        <th>Subtotal</th>
+                        <th>Frete</th>
                         <th>Total</th>
                         <th>Status</th>
                     </tr>
@@ -18,21 +20,23 @@
                 <tbody>
                     {% for p in pedidos %}
                     <tr>
-                        <td><strong>#{{ p.id }}</strong></td>
-                        <td>{{ p.data_pedido }}</td>
-                        <td>{{ p.endereco_entrega }}</td>
-                        <td>{{ p.forma_pagamento }}</td>
-                        <td class="fw-bold text-success">R$ {{ "%.2f"|format(p.valor_total) }}</td>
-                        <td><span class="badge bg-success">{{ p.status }}</span></td>
+                        <td class="fw-bold">#{{ p['id'] }}</td>
+                        <td>{{ p['endereco'] }}, {{ p['numero'] }} - {{ p['bairro'] }}, {{ p['cidade'] }}/{{ p['estado'] }}</td>
+                        <td>{{ p['cep'] }}</td>
+                        <td>R$ {{ "%.2f"|format(p['subtotal']) }}</td>
+                        <td>R$ {{ "%.2f"|format(p['frete']) }}</td>
+                        <td class="fw-bold text-danger">R$ {{ "%.2f"|format(p['total']) }}</td>
+                        <td><span class="badge bg-success">Confirmado</span></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-    {% else %}
-        <div class="alert alert-info text-center">
-            Você ainda não realizou nenhum pedido. <a href="{{ url_for('index') }}" class="alert-link">Ver catálogo de cupcakes</a>.
-        </div>
-    {% endif %}
-</div>
+    </div>
+{% else %}
+    <div class="card border-0 shadow-sm p-5 text-center">
+        <h5 class="text-muted mb-3">Você ainda não realizou nenhum pedido 🧁</h5>
+        <div><a href="{{ url_for('catalogo') }}" class="btn btn-pink">Ver catálogo de cupcakes</a></div>
+    </div>
+{% endif %}
 {% endblock %}
