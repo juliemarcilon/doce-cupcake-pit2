@@ -93,6 +93,16 @@ def atualizar_carrinho(id, acao):
     session['carrinho'] = carrinho
     return redirect(url_for('carrinho'))
 
+@app.route('/carrinho/remover/<int:id>', methods=['POST'])
+def remover_carrinho(id):
+    carrinho = session.get('carrinho', {})
+    prod_key = str(id)
+    if prod_key in carrinho:
+        del carrinho[prod_key]
+        session['carrinho'] = carrinho
+        flash("Item removido do carrinho.", "info")
+    return redirect(url_for('carrinho'))
+
 # 4. LOGIN / CADASTRO
 @app.route('/auth', methods=['GET', 'POST'])
 def auth():
@@ -176,13 +186,26 @@ def checkout():
     conn.close()
     return render_template('checkout.html', itens=itens, totais=totais)
 
-# 6. CONFIRMAÇÃO DO PEDIDO
+# 6. CONFIRMAÇÃO E HISTÓRICO DE PEDIDOS
 @app.route('/confirmacao/<int:pedido_id>')
 def confirmacao(pedido_id):
     conn = get_db()
     pedido = conn.execute("SELECT * FROM pedidos WHERE id = ?", (pedido_id,)).fetchone()
     conn.close()
     return render_template('confirmacao.html', pedido=pedido)
+
+@app.route('/meus-pedidos')
+def meus_pedidos():
+    if 'usuario_id' not in session:
+        flash("Faça login para visualizar seus pedidos.", "warning")
+        return redirect(url_for('auth'))
+    conn = get_db()
+    pedidos = conn.execute(
+        "SELECT * FROM pedidos WHERE usuario_id = ? ORDER BY id DESC",
+        (session['usuario_id'],)
+    ).fetchall()
+    conn.close()
+    return render_template('meus_pedidos.html', pedidos=pedidos)
 
 # 7. ADMINISTRAÇÃO (HU5 - Cadastrar Produtos)
 @app.route('/admin', methods=['GET', 'POST'])

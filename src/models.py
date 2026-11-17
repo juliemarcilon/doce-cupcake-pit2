@@ -29,3 +29,21 @@ def calcular_totais_carrinho(itens_carrinho, frete_fixo=8.00):
     frete = frete_fixo if subtotal > 0 else 0.00
     total = subtotal + frete
     return {'subtotal': round(subtotal, 2), 'frete': round(frete, 2), 'total': round(total, 2)}
+
+
+
+
+def remover_item_carrinho(carrinho, produto_id):
+    produto_id_str = str(produto_id)
+    if produto_id_str in carrinho:
+        del carrinho[produto_id_str]
+    return carrinho
+
+def listar_pedidos_usuario(usuario_id):
+    conn = get_db_connection()
+    pedidos = conn.execute(
+        'SELECT * FROM pedidos WHERE usuario_id = ? ORDER BY data_pedido DESC',
+        (usuario_id,)
+    ).fetchall()
+    conn.close()
+    return pedidos

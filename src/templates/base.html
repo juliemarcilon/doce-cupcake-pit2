@@ -32,6 +32,7 @@
                 {% endif %}
                 {% if session.get('usuario_nome') %}
                     <span class="text-muted small">Olá, <strong>{{ session['usuario_nome'] }}</strong></span>
+                    <a href="{{ url_for('meus_pedidos') }}" class="btn btn-sm btn-outline-danger">📦 Meus Pedidos</a>
                     <a href="{{ url_for('logout') }}" class="btn btn-sm btn-outline-secondary">Sair</a>
                 {% else %}
                     <a href="{{ url_for('auth') }}" class="text-decoration-none text-dark fw-semibold">Entrar</a>
