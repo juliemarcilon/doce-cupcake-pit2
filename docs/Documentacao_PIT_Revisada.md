@@ -28,6 +28,8 @@ Em conformidade com o ciclo de melhoria contínua (Kaizen) proposto no PIT II:
 | 4 | Finalizar pedido e pagamento online | Alta |
 | 5 | Gerenciar produtos (Painel Admin) | Média |
 
-## 5. Artefatos Visuais (Fluxo e Wireframes)
-- **Fluxograma de Compra:** `./fluxo_compra.png`
+## 5. Artefatos e Diagramas UML
+- **Diagrama de Classes UML:** `./Diagrama_Classes.md`
+- **Diagrama de Atividades (Fluxo de Compra):** `./Diagrama_Atividades.md`
+- **Dicionário de Dados:** `./Dicionario_Dados.md`
 - **Protótipos de Tela (Wireframes):** `./wireframes_loja.jpg`
