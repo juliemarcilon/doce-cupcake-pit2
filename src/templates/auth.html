@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4 justify-content-center">
+    <!-- Entrar -->
+    <div class="col-md-5">
+        <div class="card border-0 shadow-sm p-4 h-100">
+            <h4 class="fw-bold text-center mb-4">Entrar</h4>
+            <form method="POST">
+                <input type="hidden" name="tipo" value="login">
+                <div class="mb-3">
+                    <label class="form-label">E-mail</label>
+                    <input type="email" name="email" class="form-control" placeholder="seu@email.com" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <input type="password" name="senha" class="form-control" placeholder="********" required>
+                </div>
+                <button type="submit" class="btn btn-pink w-100 py-2 fw-bold">Entrar</button>
+            </form>
+            <p class="text-muted small text-center mt-3 mb-0">Admin teste: <code>admin@docecupcake.com</code> / <code>admin123</code></p>
+        </div>
+    </div>
+
+    <!-- Criar Conta -->
+    <div class="col-md-5">
+        <div class="card border-0 shadow-sm p-4 h-100">
+            <h4 class="fw-bold text-center mb-4">Criar conta</h4>
+            <form method="POST">
+                <input type="hidden" name="tipo" value="cadastro">
+                <div class="mb-3">
+                    <label class="form-label">Nome completo</label>
+                    <input type="text" name="nome" class="form-control" placeholder="Seu nome" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">E-mail</label>
+                    <input type="email" name="email" class="form-control" placeholder="seu@email.com" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <input type="password" name="senha" class="form-control" placeholder="********" required>
+                </div>
+                <button type="submit" class="btn btn-dark w-100 py-2 fw-bold">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="fw-bold mb-4">Meu carrinho</h3>
+
+{% if itens %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm p-3 mb-3">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Preço</th>
+                        <th>Qtd.</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in itens %}
+                    <tr>
+                        <td class="fw-semibold">{{ item['nome'] }}</td>
+                        <td>R$ {{ "%.2f"|format(item['preco']) }}</td>
+                        <td>
+                            <a href="{{ url_for('atualizar_carrinho', id=item['id'], acao='menos') }}" class="btn btn-sm btn-outline-secondary">-</a>
+                            <span class="mx-2 fw-bold">{{ item['quantidade'] }}</span>
+                            <a href="{{ url_for('atualizar_carrinho', id=item['id'], acao='mais') }}" class="btn btn-sm btn-outline-secondary">+</a>
+                        </td>
+                        <td class="fw-bold">R$ {{ "%.2f"|format(item['subtotal']) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="{{ url_for('catalogo') }}" class="btn btn-outline-secondary">← Continuar comprando</a>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-4">
+            <h5 class="fw-bold mb-3">Resumo</h5>
+            <div class="d-flex justify-content-between mb-2">
+                <span>Subtotal</span>
+                <span>R$ {{ "%.2f"|format(totais['subtotal']) }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span>Frete</span>
+                <span>R$ {{ "%.2f"|format(totais['frete']) }}</span>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between fw-bold fs-5 mb-4">
+                <span>Total</span>
+                <span class="text-danger">R$ {{ "%.2f"|format(totais['total']) }}</span>
+            </div>
+            <a href="{{ url_for('checkout') }}" class="btn btn-pink w-100 py-2 fw-bold">Finalizar compra</a>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="card border-0 shadow-sm p-5 text-center">
+    <h5 class="text-muted mb-3">Seu carrinho está vazio 🧁</h5>
+    <div><a href="{{ url_for('catalogo') }}" class="btn btn-pink">Ver catálogo de cupcakes</a></div>
+</div>
+{% endif %}
+{% endblock %}
